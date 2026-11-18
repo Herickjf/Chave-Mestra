@@ -1,0 +1,56 @@
+services:
+  db:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: vaultzero
+      POSTGRES_USER: vaultzero
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vaultzero -d vaultzero"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  api:
+    image: ghcr.io/${IMAGE_REPOSITORY:?Set IMAGE_REPOSITORY}/api:${IMAGE_TAG:?Set IMAGE_TAG}
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgres://vaultzero:${POSTGRES_PASSWORD}@db:5432/vaultzero
+      PRELOGIN_SECRET: ${PRELOGIN_SECRET:?Set PRELOGIN_SECRET in .env}
+      ALLOWED_ORIGIN: ${ALLOWED_ORIGIN:?Set ALLOWED_ORIGIN in .env}
+      NODE_ENV: production
+      PORT: 3000
+      ARGON2_MEMORY_KIB: 19456
+      ARGON2_TIME_COST: 2
+      SESSION_IDLE_MIN: 30
+      SESSION_ABSOLUTE_HOURS: 8
+    depends_on:
+      db:
+        condition: service_healthy
+  web:
+    image: ghcr.io/${IMAGE_REPOSITORY}/web:${IMAGE_TAG}
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy
+  gateway:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMAIN: ${DOMAIN:?Set DOMAIN in .env}
+    volumes:
+      - ./infra/Caddyfile.prod:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      web:
+        condition: service_healthy
+volumes:
+  db_data:
+  caddy_data:
+  caddy_config:
