@@ -380,6 +380,36 @@ button:disabled {
   color: #7d8591;
   margin: 24px 0 0;
 }
+.guest-entry {
+  margin-top: 22px;
+  text-align: center;
+}
+.guest-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  color: #a0a8b0;
+  font-size: 12px;
+}
+.guest-divider::before,
+.guest-divider::after {
+  content: '';
+  height: 1px;
+  flex: 1;
+  background: #e4e5e8;
+}
+.guest-entry small {
+  display: block;
+  margin-top: 12px;
+  color: #818b96;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.guest-entry .alert {
+  margin-top: 12px;
+  text-align: left;
+}
 .auth-switch a {
   color: #0866e3;
   font-weight: 700;
@@ -549,6 +579,26 @@ button:disabled {
   margin: 0;
   color: #818b96;
   font-size: 14px;
+}
+.guest-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 23px;
+  padding: 15px 18px;
+  border: 1px solid #dceafb;
+  border-radius: 15px;
+  background: #eaf3ff;
+  color: #42709f;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.guest-banner svg {
+  flex: none;
+  color: #0969dd;
+}
+.guest-banner strong {
+  color: #135cb8;
 }
 .dashboard-grid {
   display: grid;
@@ -954,6 +1004,12 @@ button:disabled {
   grid-template-columns: 1.1fr 0.8fr;
   gap: 25px;
   align-items: start;
+}
+.guest-settings {
+  grid-template-columns: minmax(0, 650px);
+}
+.guest-end-button {
+  margin-top: 20px;
 }
 .settings-panel {
   padding: 30px;

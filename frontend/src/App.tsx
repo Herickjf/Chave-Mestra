@@ -20,7 +20,8 @@ function Guard({ children }: { children: ReactNode }) {
 function PublicOnly({ children }: { children: ReactNode }) {
   const { session } = useSession();
   if (session.status === 'loading') return <div className="loading-screen">Abrindo VaultZero…</div>;
-  if (session.status === 'unlocked') return <Navigate to="/vault" replace />;
+  if (session.status === 'unlocked' || session.status === 'guest')
+    return <Navigate to="/vault" replace />;
   if (session.status === 'locked') return <LockScreen />;
   return <>{children}</>;
 }

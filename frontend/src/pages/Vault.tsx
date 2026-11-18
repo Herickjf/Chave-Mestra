@@ -33,11 +33,34 @@ function safeUrl(value: string) {
   }
 }
 export function Vault() {
-  const { session } = useSession();
-  if (session.status !== 'unlocked') return null;
-  return <VaultContents userId={session.userId} vaultKey={session.vaultKey} />;
+  const { session, guestItems, saveGuestItem, deleteGuestItem } = useSession();
+  if (session.status !== 'unlocked' && session.status !== 'guest') return null;
+  return (
+    <VaultContents
+      userId={session.userId}
+      vaultKey={session.vaultKey}
+      guest={session.status === 'guest'}
+      guestItems={guestItems}
+      saveGuestItem={saveGuestItem}
+      deleteGuestItem={deleteGuestItem}
+    />
+  );
 }
-function VaultContents({ userId, vaultKey }: { userId: string; vaultKey: CryptoKey }) {
+function VaultContents({
+  userId,
+  vaultKey,
+  guest,
+  guestItems,
+  saveGuestItem,
+  deleteGuestItem,
+}: {
+  userId: string;
+  vaultKey: CryptoKey;
+  guest: boolean;
+  guestItems: StoredItem[];
+  saveGuestItem: (item: StoredItem) => void;
+  deleteGuestItem: (id: string) => void;
+}) {
   const [items, setItems] = useState<OpenedItem[]>([]),
     [query, setQuery] = useState(''),
     [selected, setSelected] = useState<string | null>(null),
@@ -51,7 +74,7 @@ function VaultContents({ userId, vaultKey }: { userId: string; vaultKey: CryptoK
     setLoading(true);
     setError('');
     try {
-      const stored = await api<StoredItem[]>('/vault/items');
+      const stored = guest ? guestItems : await api<StoredItem[]>('/vault/items');
       const opened = await Promise.all(
         stored.map(async (item) => {
           try {
@@ -100,16 +123,28 @@ function VaultContents({ userId, vaultKey }: { userId: string; vaultKey: CryptoK
         ciphertext: toBase64Url(encrypted.ciphertext),
         version: creating ? 1 : active!.version,
       };
-      await api(
-        `/vault/items${creating ? '' : `/${id}`}`,
-        creating ? 'POST' : 'PUT',
-        creating ? body : { iv: body.iv, ciphertext: body.ciphertext, version: body.version },
-      );
+      if (guest) {
+        const now = new Date().toISOString();
+        const stored: StoredItem = {
+          ...body,
+          version: creating ? 1 : active!.version + 1,
+          createdAt: creating ? now : active!.createdAt,
+          updatedAt: now,
+        };
+        saveGuestItem(stored);
+        setItems((current) => [{ ...stored, plain }, ...current.filter((item) => item.id !== id)]);
+      } else {
+        await api(
+          `/vault/items${creating ? '' : `/${id}`}`,
+          creating ? 'POST' : 'PUT',
+          creating ? body : { iv: body.iv, ciphertext: body.ciphertext, version: body.version },
+        );
+      }
       setCreating(false);
       setEditing(false);
       setSelected(id);
       setMessage('Credencial salva com segurança.');
-      await load();
+      if (!guest) await load();
     } catch (e) {
       setError(errorText(e));
     }
@@ -118,10 +153,15 @@ function VaultContents({ userId, vaultKey }: { userId: string; vaultKey: CryptoK
     if (!active || !window.confirm('Excluir esta credencial? Essa ação não pode ser desfeita.'))
       return;
     try {
-      await api(`/vault/items/${active.id}`, 'DELETE');
+      if (guest) {
+        deleteGuestItem(active.id);
+        setItems((current) => current.filter((item) => item.id !== active.id));
+      } else {
+        await api(`/vault/items/${active.id}`, 'DELETE');
+      }
       setSelected(null);
       setMessage('Credencial excluída.');
-      await load();
+      if (!guest) await load();
     } catch (e) {
       setError(errorText(e));
     }
@@ -147,6 +187,15 @@ function VaultContents({ userId, vaultKey }: { userId: string; vaultKey: CryptoK
           <Plus size={19} /> Nova credencial
         </button>
       </div>
+      {guest && (
+        <div className="guest-banner" role="status">
+          <Sparkles size={19} />
+          <span>
+            <strong>Modo visitante.</strong> Itens cifrados só nesta aba. Sair, recarregar ou ficar
+            inativo apaga o cofre sem recuperação.
+          </span>
+        </div>
+      )}
       <div className="dashboard-grid">
         <section className="panel vault-panel">
           <div className="panel-head">
@@ -324,7 +373,8 @@ function VaultContents({ userId, vaultKey }: { userId: string; vaultKey: CryptoK
                 <h2>Feito para sua paz de espírito.</h2>
                 <p>Selecione uma credencial para visualizar ou adicione uma nova ao seu cofre.</p>
                 <div className="mini-shield">
-                  <ShieldCheck size={18} /> Criptografado no seu navegador
+                  <ShieldCheck size={18} />{' '}
+                  {guest ? 'Criptografado somente nesta aba' : 'Criptografado no seu navegador'}
                 </div>
               </div>
             )}
@@ -334,8 +384,12 @@ function VaultContents({ userId, vaultKey }: { userId: string; vaultKey: CryptoK
               <ShieldCheck size={20} />
             </span>
             <div>
-              <strong>Uma camada extra de cuidado</strong>
-              <p>Bloquearemos seu cofre após alguns minutos sem atividade.</p>
+              <strong>{guest ? 'Sessão temporária' : 'Uma camada extra de cuidado'}</strong>
+              <p>
+                {guest
+                  ? 'A inatividade encerra a visita e apaga os itens desta sessão.'
+                  : 'Bloquearemos seu cofre após alguns minutos sem atividade.'}
+              </p>
             </div>
           </section>
         </aside>

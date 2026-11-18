@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
-import { api, type Me } from '../api/client';
+import { api, type Me, type StoredItem } from '../api/client';
 import { fromBase64Url, randomBytes, toBase64Url } from '../crypto/encoding';
 import { deriveKeys, KDF_ITERATIONS } from '../crypto/kdf';
 import { createVaultKey, rewrapVaultKey, unwrapVaultKey } from '../crypto/vault';
@@ -7,9 +7,14 @@ import { createVaultKey, rewrapVaultKey, unwrapVaultKey } from '../crypto/vault'
 type Session =
   | { status: 'loading' | 'anonymous' }
   | { status: 'locked'; userId: string; email: string }
-  | { status: 'unlocked'; userId: string; email: string; vaultKey: CryptoKey };
+  | { status: 'unlocked'; userId: string; email: string; vaultKey: CryptoKey }
+  | { status: 'guest'; userId: string; vaultKey: CryptoKey };
 type Context = {
   session: Session;
+  guestItems: StoredItem[];
+  startGuest: () => Promise<void>;
+  saveGuestItem: (item: StoredItem) => void;
+  deleteGuestItem: (id: string) => void;
   lockMinutes: number;
   setLockMinutes: (minutes: number) => void;
   register: (email: string, password: string) => Promise<void>;
@@ -28,6 +33,7 @@ export function useSession() {
 
 export function SessionProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session>({ status: 'loading' });
+  const [guestItems, setGuestItems] = useState<StoredItem[]>([]);
   const [lockMinutes, setLockMinutesState] = useState(
     () => Number(localStorage.getItem('vaultzero/lockMinutes')) || 5,
   );
@@ -40,15 +46,38 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     let live = true;
     api<Me>('/auth/me')
       .then((me) => {
-        if (live) setSession({ status: 'locked', userId: me.userId, email: me.email });
+        if (live)
+          setSession((current) =>
+            current.status === 'loading'
+              ? { status: 'locked', userId: me.userId, email: me.email }
+              : current,
+          );
       })
       .catch(() => {
-        if (live) setSession({ status: 'anonymous' });
+        if (live)
+          setSession((current) =>
+            current.status === 'loading' ? { status: 'anonymous' } : current,
+          );
       });
     return () => {
       live = false;
     };
   }, []);
+
+  const startGuest = async () => {
+    const vaultKey = await crypto.subtle.generateKey({ name: 'AES-GCM', length: 256 }, false, [
+      'encrypt',
+      'decrypt',
+    ]);
+    setGuestItems([]);
+    setSession({ status: 'guest', userId: crypto.randomUUID(), vaultKey });
+  };
+  const saveGuestItem = (item: StoredItem) => {
+    setGuestItems((current) => [item, ...current.filter((existing) => existing.id !== item.id)]);
+  };
+  const deleteGuestItem = (id: string) => {
+    setGuestItems((current) => current.filter((item) => item.id !== id));
+  };
 
   const register = async (email: string, password: string) => {
     const userId = crypto.randomUUID();
@@ -140,11 +169,22 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       newKeys.authKey.fill(0);
     }
   };
-  const lock = () =>
+  const lock = () => {
+    if (session.status === 'guest') {
+      setGuestItems([]);
+      setSession({ status: 'anonymous' });
+      return;
+    }
     setSession((s) =>
       s.status === 'unlocked' ? { status: 'locked', userId: s.userId, email: s.email } : s,
     );
+  };
   const logout = async () => {
+    if (session.status === 'guest') {
+      setGuestItems([]);
+      setSession({ status: 'anonymous' });
+      return;
+    }
     try {
       await api('/auth/logout', 'POST');
     } finally {
@@ -155,6 +195,10 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     <SessionContext.Provider
       value={{
         session,
+        guestItems,
+        startGuest,
+        saveGuestItem,
+        deleteGuestItem,
         lockMinutes,
         setLockMinutes,
         register,

@@ -4,7 +4,7 @@ import { useSession } from './SessionContext';
 export function useAutoLock() {
   const { session, lockMinutes, lock } = useSession();
   useEffect(() => {
-    if (session.status !== 'unlocked') return;
+    if (session.status !== 'unlocked' && session.status !== 'guest') return;
     let timer: ReturnType<typeof setTimeout>;
     const reset = () => {
       clearTimeout(timer);

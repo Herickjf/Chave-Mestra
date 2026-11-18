@@ -15,6 +15,10 @@ Senha mestra e chave do cofre permanecem no navegador. PBKDF2 com 600.000 itera�
 
 O modelo de ameaça cobre vazamento de banco, usuário autenticado malicioso, interceptação de rede e força bruta online. JavaScript malicioso servido por um servidor comprometido, malware local, rollback e remoção de itens ficam fora da proteção do beta. Perder a senha mestra torna o cofre irrecuperável.
 
+## Usar sem conta
+
+Nas telas de entrada, **Continuar sem conta** abre um cofre visitante. O navegador gera uma chave AES-GCM temporária; as credenciais são cifradas e ficam apenas na memória da aba, sem chamadas de API para cadastro ou itens. É possível criar, buscar, editar, excluir e copiar credenciais e usar o gerador. Sair, recarregar, fechar a aba ou atingir o tempo de inatividade apaga a chave e os itens. Esse modo é útil para experimentar o aplicativo; os itens temporários não são transferidos ao criar uma conta depois.
+
 ## Rodar localmente
 
 Requisitos: Docker Engine e Compose v2. Copie `.env.example` para `.env` e substitua `POSTGRES_PASSWORD` e `PRELOGIN_SECRET` por valores aleatórios longos. Então:

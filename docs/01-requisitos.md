@@ -36,6 +36,7 @@ O VaultZero permite que um usuário crie uma conta, guarde credenciais de vário
 | **RF11** | Alterar a senha mestra sem perder as credenciais. | Key wrapping |
 | **RF12** | Detectar credenciais adulteradas e avisar o usuário, sem exibir dado corrompido. | Integridade |
 | **RF13** | Buscar credenciais por título/URL (busca local, após decifrar). | Privacidade dos metadados |
+| **RF14** | Usar um cofre visitante sem cadastro, com itens cifrados apenas em memória e descarte ao sair, recarregar ou ficar inativo. | Uso temporário local |
 
 ## 4. Requisitos não funcionais
 

@@ -174,3 +174,11 @@ type SessionState =
 - [ ] Alerta de adulteração
 - [ ] Build servido com CSP
 - [ ] Modo "demo" opcional: botão que exibe o blob cifrado de um item (apoio à apresentação)
+
+## 11. Modo visitante · RF14
+
+- Entrada por **Continuar sem conta** nas telas de login e cadastro, sem e-mail ou senha mestra.
+- O navegador gera um `userId` e uma `CryptoKey` AES-256-GCM não exportável. Os itens usam o mesmo `encryptItem`/`decryptItem` do cofre de conta.
+- Os blobs cifrados permanecem somente no estado React da aba. Não há `localStorage`, `sessionStorage`, IndexedDB nem chamadas de API para CRUD visitante.
+- Sair, recarregar ou fechar a aba descarta a chave e os itens. O bloqueio por inatividade encerra a visita em vez de pedir senha.
+- A interface identifica a sessão temporária e avisa sobre a perda dos itens antes da entrada e durante o uso. Configurações de senha mestra ficam indisponíveis no modo visitante.

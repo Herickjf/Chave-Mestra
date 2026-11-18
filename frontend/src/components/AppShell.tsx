@@ -15,6 +15,13 @@ export function AppShell({ children }: { children: ReactNode }) {
   const { lock, logout, session } = useSession();
   const navigate = useNavigate();
   const [menu, setMenu] = useState(false);
+  const guest = session.status === 'guest';
+  const endGuest = () => {
+    if (!window.confirm('Encerrar a visita? Os itens temporários serão apagados sem recuperação.'))
+      return;
+    lock();
+    navigate('/login');
+  };
   return (
     <div className="app-layout">
       <aside className={`sidebar ${menu ? 'open' : ''}`}>
@@ -35,21 +42,27 @@ export function AppShell({ children }: { children: ReactNode }) {
             <span className="tile-icon">
               <ShieldCheck size={20} />
             </span>
-            <strong>Protegido por você</strong>
-            <p>Seus dados são criptografados antes de sair deste dispositivo.</p>
+            <strong>{guest ? 'Sessão visitante' : 'Protegido por você'}</strong>
+            <p>
+              {guest
+                ? 'Itens cifrados apenas nesta aba. Nada é enviado ao servidor.'
+                : 'Seus dados são criptografados antes de sair deste dispositivo.'}
+            </p>
           </div>
-          <button className="side-action" onClick={lock}>
-            <LockKeyhole size={18} /> Bloquear cofre
+          <button className="side-action" onClick={guest ? endGuest : lock}>
+            <LockKeyhole size={18} /> {guest ? 'Encerrar visita' : 'Bloquear cofre'}
           </button>
-          <button
-            className="side-action"
-            onClick={() => {
-              void logout();
-              navigate('/login');
-            }}
-          >
-            <LogOut size={18} /> Sair
-          </button>
+          {!guest && (
+            <button
+              className="side-action"
+              onClick={() => {
+                void logout();
+                navigate('/login');
+              }}
+            >
+              <LogOut size={18} /> Sair
+            </button>
+          )}
         </div>
       </aside>
       <div className="app-content">
@@ -63,7 +76,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           </button>
           <span className="topbar-crumb">VAULTZERO / ÁREA SEGURA</span>
           <div className="topbar-right">
-            <span className="status-dot" /> Cofre desbloqueado{' '}
+            <span className="status-dot" /> {guest ? 'Sessão visitante' : 'Cofre desbloqueado'}{' '}
             <span className="avatar">
               {session.status === 'unlocked' ? session.email.charAt(0).toUpperCase() : 'V'}
             </span>

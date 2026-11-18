@@ -30,6 +30,8 @@ Use os componentes em `src/components/`, as telas em `src/pages/` e os estilos e
 
 O painel do cofre prioriza busca local, lista e detalhe. Não enviar título, URL, usuário, senha ou notas à API em texto claro. O gerador mostra opções, senha e entropia. A configuração de bloqueio deve ser fácil de encontrar. A senha copiada é limpa da área de transferência em aproximadamente 15 segundos, com aviso de que isso é melhor esforço.
 
+No modo visitante, manter o aviso de sessão temporária nas telas de entrada e no cofre. Itens visitantes são cifrados, mas ficam apenas em memória. Sair, recarregar, fechar a aba ou atingir o tempo de inatividade elimina o conteúdo; a interface deve anunciar esse efeito antes de encerrar a visita. Não exibir controles de troca da senha mestra nessa sessão.
+
 ## Conformidade técnica e acessibilidade
 
 - `src/crypto/` é a única camada que cifra/decifra; nenhum componente chama `fetch` diretamente, use `src/api/client.ts`.

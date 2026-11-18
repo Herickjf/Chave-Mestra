@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Sparkles } from 'lucide-react';
 import { ApiError } from '../api/client';
 import { useSession } from '../state/SessionContext';
 import {
@@ -11,6 +11,43 @@ import {
   errorText,
   passwordStrong,
 } from '../components/Common';
+
+function GuestEntry() {
+  const { startGuest } = useSession();
+  const navigate = useNavigate();
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
+  const enter = async () => {
+    setBusy(true);
+    setError('');
+    try {
+      await startGuest();
+      navigate('/vault');
+    } catch (cause) {
+      setError(errorText(cause));
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <div className="guest-entry">
+      <span className="guest-divider">ou</span>
+      <button
+        type="button"
+        className="button secondary full"
+        disabled={busy}
+        onClick={() => void enter()}
+      >
+        <Sparkles size={18} /> {busy ? 'Abrindo...' : 'Continuar sem conta'}
+      </button>
+      <small>
+        Sessão temporária neste navegador. Seus itens desaparecem ao sair, recarregar a página ou
+        ficar inativo.
+      </small>
+      {error && <Alert>{error}</Alert>}
+    </div>
+  );
+}
 
 export function Register() {
   const { register } = useSession();
@@ -89,6 +126,7 @@ export function Register() {
           {busy ? 'Criando seu cofre…' : 'Criar meu cofre'} <ChevronRight size={18} />
         </button>
       </form>
+      <GuestEntry />
       <p className="auth-switch">
         Já tem uma conta? <Link to="/login">Entrar</Link>
       </p>
@@ -138,6 +176,7 @@ export function Login() {
           {busy ? 'Abrindo seu cofre…' : 'Entrar no cofre'} <ChevronRight size={18} />
         </button>
       </form>
+      <GuestEntry />
       <p className="auth-switch">
         Primeira vez aqui? <Link to="/register">Criar conta</Link>
       </p>

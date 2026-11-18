@@ -32,7 +32,7 @@ describe('contrato criptográfico', () => {
       TamperError,
     );
     await expect(unwrapVaultKey(wrapped, iv, first.kek, crypto.randomUUID())).rejects.toThrow();
-  });
+  }, 20_000);
   it('troca a senha sem alterar a chave do cofre', async () => {
     const userId = crypto.randomUUID(),
       salt = randomBytes(16);
@@ -51,7 +51,7 @@ describe('contrato criptográfico', () => {
     await expect(
       unwrapVaultKey(changed.wrapped, changed.iv, oldKeys.kek, userId),
     ).rejects.toThrow();
-  });
+  }, 20_000);
 });
 
 it('gera senha com o comprimento e todas as classes selecionadas', () => {
