@@ -56,7 +56,7 @@ CREATE TABLE users (
   id                  UUID PRIMARY KEY,              -- gerado pelo cliente (entra no AAD)
   email               CITEXT NOT NULL UNIQUE,
   auth_hash           TEXT   NOT NULL,               -- Argon2id do authKey
-  kdf_salt            BYTEA  NOT NULL,               -- 16 bytes
+  kdf_salt            BYTEA  NOT NULL UNIQUE,        -- 16 bytes
   kdf_iterations      INTEGER NOT NULL CHECK (kdf_iterations >= 600000),
   wrapped_vault_key   BYTEA  NOT NULL,
   wrapped_vault_iv    BYTEA  NOT NULL,               -- 12 bytes
@@ -71,14 +71,15 @@ CREATE TABLE sessions (
   user_id      UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   token_hash   BYTEA NOT NULL UNIQUE,                -- SHA-256 do token; o token em si não é guardado
   created_at   TIMESTAMPTZ NOT NULL DEFAULT now(),
-  expires_at   TIMESTAMPTZ NOT NULL,
+  last_seen_at TIMESTAMPTZ NOT NULL DEFAULT now(),   -- atualizado a cada requisição autenticada para renovar a janela de inatividade
+  expires_at   TIMESTAMPTZ NOT NULL,                 -- prazo absoluto fixado na criação da sessão
   revoked_at   TIMESTAMPTZ
 );
 CREATE INDEX ON sessions (user_id);
 
 CREATE TABLE vault_items (
   id          UUID PRIMARY KEY,                      -- gerado pelo cliente (entra no AAD)
-  user_id     UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  user_id     UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE ON UPDATE RESTRICT,
   iv          BYTEA NOT NULL,                        -- 12 bytes
   ciphertext  BYTEA NOT NULL,                        -- inclui a tag GCM
   version     INTEGER NOT NULL DEFAULT 1,

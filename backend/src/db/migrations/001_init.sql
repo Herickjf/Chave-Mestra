@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS sessions (
 CREATE INDEX IF NOT EXISTS sessions_user_id_idx ON sessions(user_id);
 CREATE TABLE IF NOT EXISTS vault_items (
   id UUID PRIMARY KEY,
-  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE ON UPDATE RESTRICT,
   iv BYTEA NOT NULL CHECK (octet_length(iv) = 12),
   ciphertext BYTEA NOT NULL CHECK (octet_length(ciphertext) BETWEEN 16 AND 65536),
   version INTEGER NOT NULL DEFAULT 1,

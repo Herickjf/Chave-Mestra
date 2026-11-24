@@ -114,5 +114,5 @@ jobs:
           repo="${GITHUB_REPOSITORY,,}"
           printf -v remote_dir '%q' "$DEPLOY_DIR"
           ssh "$DEPLOY_USER@$DEPLOY_HOST" "mkdir -p -- $remote_dir"
-          tar -cf - compose.prod.yml infra/Caddyfile.prod infra/deploy.sh | ssh "$DEPLOY_USER@$DEPLOY_HOST" "cd $remote_dir && tar -xf -"
+          tar -cf - compose.prod.yml database/scripts infra/Caddyfile.prod infra/deploy.sh | ssh "$DEPLOY_USER@$DEPLOY_HOST" "cd $remote_dir && tar -xf -"
           ssh "$DEPLOY_USER@$DEPLOY_HOST" "cd $remote_dir && IMAGE_REPOSITORY=$repo IMAGE_TAG=$GITHUB_SHA bash infra/deploy.sh"
