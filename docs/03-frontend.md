@@ -1,4 +1,4 @@
-# VaultZero: Especificação do Frontend
+# Chave Mestra: Especificação do Frontend
 
 ## 1. Responsabilidades
 

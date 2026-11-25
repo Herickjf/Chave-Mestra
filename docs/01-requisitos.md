@@ -1,10 +1,10 @@
-# VaultZero: Requisitos (versão beta)
+# Chave Mestra: Requisitos (versão beta)
 
 > Gerenciador de senhas *zero-knowledge* para fins didáticos, disciplina de Segurança Computacional.
 
 ## 1. Visão geral
 
-O VaultZero permite que um usuário crie uma conta, guarde credenciais de vários serviços, gere senhas fortes e acesse tudo por meio de uma **senha mestra**. Toda credencial é cifrada **no navegador** antes de ser enviada. O servidor só armazena dados que não consegue ler.
+O Chave Mestra permite que um usuário crie uma conta, guarde credenciais de vários serviços, gere senhas fortes e acesse tudo por meio de uma **senha mestra**. Toda credencial é cifrada **no navegador** antes de ser enviada. O servidor só armazena dados que não consegue ler.
 
 **Propriedade central (zero-knowledge):** o servidor nunca recebe a senha mestra, a chave de criptografia nem qualquer credencial em texto claro.
 

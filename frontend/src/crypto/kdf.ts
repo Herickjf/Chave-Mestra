@@ -13,7 +13,11 @@ export async function deriveKeys(
   ]);
   const masterBits = new Uint8Array(
     await crypto.subtle.deriveBits(
-      { name: 'PBKDF2', hash: 'SHA-256', salt: salt as BufferSource, iterations },
+      {
+        name: 'PBKDF2',
+        hash: 'SHA-256',
+        salt: salt as BufferSource, iterations
+      },
       passwordKey,
       256,
     ),

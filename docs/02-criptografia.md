@@ -1,4 +1,4 @@
-# VaultZero: Arquitetura criptográfica
+# Chave Mestra: Arquitetura criptográfica
 
 Este documento é o contrato entre front e back. O frontend implementa tudo o que é criptografia; o backend só armazena e autentica.
 

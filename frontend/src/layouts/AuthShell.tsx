@@ -41,7 +41,7 @@ export function AuthShell({
         {children}
       </section>
       <footer className="auth-footer">
-        VAULTZERO <span>·</span> MAIS LEVE PARA VOCÊ. MAIS DIFÍCIL PARA INTRUSOS.
+        CHAVE MESTRA <span>·</span> MAIS LEVE PARA VOCÊ. MAIS DIFÍCIL PARA INTRUSOS.
       </footer>
     </main>
   );

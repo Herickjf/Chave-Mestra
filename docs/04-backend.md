@@ -1,4 +1,4 @@
-# VaultZero: Especificação do Backend
+# Chave Mestra: Especificação do Backend
 
 ## 1. Responsabilidades
 

@@ -1,4 +1,4 @@
-# VaultZero
+# Chave Mestra
 
 Gerenciador de senhas didático com criptografia no navegador. O servidor autentica e armazena apenas dados cifrados. Implementação baseada em [requisitos](docs/01-requisitos.md), [contrato criptográfico](docs/02-criptografia.md), [frontend](docs/03-frontend.md) e [backend](docs/04-backend.md). O design segue as [diretrizes visuais](docs/05-diretrizes-frontend.md).
 

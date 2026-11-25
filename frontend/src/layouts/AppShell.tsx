@@ -74,7 +74,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           >
             <Menu size={22} />
           </button>
-          <span className="topbar-crumb">VAULTZERO / ÁREA SEGURA</span>
+          <span className="topbar-crumb">CHAVE MESTRA / ÁREA SEGURA</span>
           <div className="topbar-right">
             <span className="status-dot" /> {guest ? 'Sessão visitante' : 'Cofre desbloqueado'}{' '}
             <span className="avatar">
