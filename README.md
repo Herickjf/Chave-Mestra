@@ -31,6 +31,20 @@ Acesse **https://localhost:8443**. O Caddy cria um certificado local; o navegado
 
 Para desenvolvimento manual, use Node.js 20+ em `backend/` e `frontend/`: `npm ci`, `npm run dev`. O backend precisa das variáveis de `backend/.env.example` no ambiente e de PostgreSQL 15+. O Vite encaminha `/api` para `localhost:3000`. Para testar cookies seguros e Web Crypto no fluxo completo, prefira o Compose com HTTPS.
 
+## Simulador de arquitetura no terminal
+
+O [simulador](simulator/README.md) demonstra cadastro, login, cofre cifrado,
+adulteração, troca da senha mestra, autorização, sessões, força bruta e modo visitante.
+Ele reutiliza a criptografia do frontend e mantém API e banco simulados em memória.
+
+```sh
+cd simulator
+npm ci
+npm start
+```
+
+Use `npm run demo` para executar todos os cenários sem interação.
+
 ## Testes e build
 
 Em cada diretório, `npm run typecheck`, `npm test` e `npm run build`. No frontend, `npm run format` e `npm run format:check` mantêm o código legível. Testes do backend exigem PostgreSQL e `DATABASE_URL`, `PRELOGIN_SECRET`, `ALLOWED_ORIGIN`; o CI fornece esses valores. O teste de integração cobre autenticação, hash Argon2id, isolamento entre usuários, conflito de versão, bloqueio, logout e validação de IV. O front testa AAD, adulteração, troca de senha mestra e gerador.
