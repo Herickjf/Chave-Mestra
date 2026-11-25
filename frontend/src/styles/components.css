@@ -1,0 +1,228 @@
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: Manrope, sans-serif;
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: -0.07em;
+  line-height: 1;
+  color: #253041;
+}
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  color: #fff;
+  background: linear-gradient(145deg, #2683ff, #0454d4);
+  box-shadow:
+    0 8px 18px #0a61dc33,
+    inset 0 1px #ffffff88;
+}
+.brand-blue {
+  color: #0762df;
+}
+.brand small {
+  display: block;
+  margin-top: 7px;
+  font:
+    700 8px 'DM Sans',
+    sans-serif;
+  letter-spacing: 0.28em;
+  color: #87909b;
+}
+.eyebrow {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  color: #186be0;
+}
+.muted {
+  color: #79818e;
+}
+.button {
+  border: 0;
+  border-radius: 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 19px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+.button:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+.button.primary {
+  color: #fff;
+  background: linear-gradient(180deg, var(--cobalt-light) 0%, var(--cobalt) 100%);
+  box-shadow:
+    0 9px 18px #0b63dc36,
+    inset 0 1px #ffffff80;
+}
+.button.primary:hover:not(:disabled) {
+  box-shadow:
+    0 11px 22px #0b63dc50,
+    inset 0 1px #ffffff80;
+}
+.button.secondary {
+  color: #293140;
+  background: linear-gradient(145deg, #fff, #f1eee9);
+  box-shadow:
+    5px 6px 13px #c9c5bf7a,
+    -4px -4px 10px #fff,
+    inset 0 1px #fff;
+}
+.button.full {
+  width: 100%;
+}
+.icon-button {
+  border: 0;
+  background: transparent;
+  color: #7b8491;
+  padding: 7px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 9px;
+}
+.icon-button:hover {
+  background: #edf2f9;
+  color: #075bd7;
+}
+.text-button {
+  border: 0;
+  background: none;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #0863dc;
+  font-weight: 700;
+}
+.text-button.center {
+  display: flex;
+  margin: 23px auto 0;
+}
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+.alert.error {
+  background: #fff0ed;
+  color: #a23b2b;
+}
+.alert.success {
+  background: #eaf7ef;
+  color: #246946;
+}
+.form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+.form-stack label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #3e4651;
+}
+.form-stack input:not([type='checkbox']),
+.form-stack textarea {
+  width: 100%;
+  border: 1px solid #e3e3e4;
+  background: #faf9f7;
+  border-radius: 13px;
+  padding: 14px 15px;
+  color: #252d3b;
+  outline: none;
+}
+.form-stack input:focus,
+.form-stack textarea:focus {
+  border-color: #3289f6;
+  box-shadow: 0 0 0 3px #318af524;
+}
+.form-stack input::placeholder,
+.form-stack textarea::placeholder {
+  color: #a1a6af;
+}
+.password-wrap {
+  position: relative;
+}
+.password-wrap input {
+  padding-right: 49px !important;
+}
+.password-wrap .icon-button {
+  position: absolute;
+  right: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.strength {
+  margin-top: -8px;
+}
+.strength-track {
+  height: 6px;
+  border-radius: 9px;
+  background: var(--mist);
+  overflow: hidden;
+}
+.strength-track span {
+  height: 100%;
+  display: block;
+  background: linear-gradient(90deg, #63aaff, #0763df);
+  border-radius: 9px;
+  transition: width 0.3s;
+}
+.strength-0 {
+  width: 0;
+}
+.strength-1 {
+  width: 20%;
+}
+.strength-2 {
+  width: 40%;
+}
+.strength-3 {
+  width: 60%;
+}
+.strength-4 {
+  width: 80%;
+}
+.strength-5 {
+  width: 100%;
+}
+.strength small {
+  display: block;
+  color: #818995;
+  margin-top: 7px;
+  font-size: 11px;
+}
+.check-line {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start;
+  gap: 10px !important;
+  line-height: 1.45;
+  font-weight: 500 !important;
+  color: #626b77 !important;
+}
+.check-line input {
+  width: 17px;
+  height: 17px;
+  accent-color: #0865e7;
+  margin-top: 1px;
+}

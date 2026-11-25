@@ -9,7 +9,7 @@ import {
   Shuffle,
 } from 'lucide-react';
 import { useSession } from '../state/SessionContext';
-import { Brand } from './Common';
+import { Brand } from '../components/Brand';
 
 export function AppShell({ children }: { children: ReactNode }) {
   const { lock, logout, session } = useSession();

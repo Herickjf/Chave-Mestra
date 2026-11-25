@@ -1,0 +1,151 @@
+.loading-screen {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  color: #176ad8;
+  font-weight: 700;
+}
+.bottom-nav,
+.mobile-menu {
+  display: none;
+}
+@media (max-width: 1050px) {
+  .sidebar {
+    width: 210px;
+  }
+  .dashboard-grid {
+    grid-template-columns: minmax(0, 1fr) 330px;
+  }
+  .main-content {
+    padding: 35px 3%;
+  }
+  .auth-layout {
+    gap: 3vw;
+    padding: 5vw;
+  }
+}
+@media (max-width: 800px) {
+  .sidebar {
+    display: none;
+  }
+  .topbar {
+    height: 70px;
+  }
+  .topbar-crumb {
+    margin-right: auto;
+  }
+  .mobile-menu {
+    display: inline-grid;
+    margin-right: 12px;
+  }
+  .sidebar.open {
+    display: flex;
+    position: fixed;
+    z-index: 20;
+    box-shadow: 15px 0 35px #27384b33;
+  }
+  .main-content {
+    padding: 32px 5% 100px;
+  }
+  .bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    background: #fbfaf8;
+    border-top: 1px solid #e6e6e2;
+    padding: 9px 8px max(9px, env(safe-area-inset-bottom));
+    justify-content: space-around;
+  }
+  .bottom-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    color: #8b939e;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 5px 15px;
+  }
+  .bottom-nav a.active {
+    color: #0b65df;
+  }
+  .dashboard-grid,
+  .generator-grid,
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+  .detail-panel {
+    min-height: 0;
+  }
+  .auth-layout {
+    grid-template-columns: 1fr;
+    padding: 35px 5% 60px;
+  }
+  .auth-intro {
+    display: none;
+  }
+  .auth-card {
+    max-width: 480px;
+    width: 100%;
+    margin: auto;
+  }
+  .auth-footer {
+    left: 5%;
+    right: 5%;
+    text-align: center;
+  }
+}
+@media (max-width: 550px) {
+  .topbar-right {
+    font-size: 0;
+  }
+  .topbar-right .avatar {
+    margin-left: 5px;
+  }
+  .page-heading {
+    align-items: start;
+    flex-direction: column;
+  }
+  .page-heading .button {
+    width: 100%;
+  }
+  .page-heading h1 {
+    font-size: 36px;
+  }
+  .panel {
+    padding: 20px;
+  }
+  .auth-card {
+    padding: 29px 22px;
+  }
+  .auth-layout {
+    align-items: start;
+  }
+  .auth-card {
+    margin-top: 30px;
+  }
+  .generator-result {
+    padding: 25px;
+  }
+  .generated-password {
+    font-size: 20px;
+  }
+  .generator-actions .button {
+    flex: 1;
+  }
+  .settings-panel {
+    padding: 22px;
+  }
+}
+.mobile-brand {
+  display: none;
+}
+@media (max-width: 800px) {
+  .mobile-brand {
+    display: block;
+    margin-bottom: 30px;
+  }
+}

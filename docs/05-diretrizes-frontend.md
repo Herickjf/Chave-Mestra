@@ -12,7 +12,7 @@ Referência: estudo de componentes **Soft / System** anexado ao pedido. Este doc
 | Ivory | `#f7f5f1` | Fundo de página e cartões quentes |
 | Charcoal | `#222b39` | Texto principal |
 
-Os tokens ficam em `:root` de `src/styles.css` (`--cobalt`, `--cobalt-light`, `--sky`, `--mist`, `--ivory`, `--charcoal`). Use azul somente para ações e estados ativos. Informações secundárias usam cinza azulado; erros usam vermelho suave e nunca dependem só de cor. O fundo é marfim claro. Cartões têm cantos arredondados (18–26 px), borda quase branca, sombra externa difusa e leve realce interno. Evite sombras fortes em conteúdo crítico: texto e campos devem manter contraste.
+Os tokens ficam em `:root` de `src/styles/base.css` (`--cobalt`, `--cobalt-light`, `--sky`, `--mist`, `--ivory`, `--charcoal`). Use azul somente para ações e estados ativos. Informações secundárias usam cinza azulado; erros usam vermelho suave e nunca dependem só de cor. O fundo é marfim claro. Cartões têm cantos arredondados (18–26 px), borda quase branca, sombra externa difusa e leve realce interno. Evite sombras fortes em conteúdo crítico: texto e campos devem manter contraste.
 
 ## Tipografia e composição
 
@@ -26,7 +26,7 @@ Os tokens ficam em `:root` de `src/styles.css` (`--cobalt`, `--cobalt-light`, `-
 
 ## Componentes e estados
 
-Use os componentes em `src/components/`, as telas em `src/pages/` e os estilos em `styles.css` como ponto de partida: `Brand`, `Alert`, `StrengthMeter`, `PasswordInput`, cartões, botões, lista, formulário, detalhe e navegação. Em novos componentes, preservar os tokens e comportamento responsivo. Cobrir sempre estados vazio, carregando, erro, sucesso, bloqueado e conflito de versão.
+Use os componentes em `src/components/`, as telas em `src/pages/` e os estilos em `src/styles/` como ponto de partida: `Brand`, `Alert`, `StrengthMeter`, `PasswordInput`, cartões, botões, lista, formulário, detalhe e navegação. Em novos componentes, preservar os tokens e comportamento responsivo. Cobrir sempre estados vazio, carregando, erro, sucesso, bloqueado e conflito de versão.
 
 O painel do cofre prioriza busca local, lista e detalhe. Não enviar título, URL, usuário, senha ou notas à API em texto claro. O gerador mostra opções, senha e entropia. A configuração de bloqueio deve ser fácil de encontrar. A senha copiada é limpa da área de transferência em aproximadamente 15 segundos, com aviso de que isso é melhor esforço.
 

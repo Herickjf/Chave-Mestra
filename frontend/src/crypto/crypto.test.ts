@@ -7,8 +7,8 @@ import { randomBytes } from './encoding';
 
 describe('contrato criptográfico', () => {
   it('isola authKey, autentica AAD e detecta adulteração', async () => {
-    const userId = crypto.randomUUID(),
-      itemId = crypto.randomUUID();
+    const userId = crypto.randomUUID();
+    const itemId = crypto.randomUUID();
     const first = await deriveKeys('uma senha mestra suficientemente longa', randomBytes(16));
     const { vaultKey, wrapped, iv } = await createVaultKey(first.kek, userId);
     expect(first.authKey).toHaveLength(32);
@@ -34,8 +34,8 @@ describe('contrato criptográfico', () => {
     await expect(unwrapVaultKey(wrapped, iv, first.kek, crypto.randomUUID())).rejects.toThrow();
   }, 20_000);
   it('troca a senha sem alterar a chave do cofre', async () => {
-    const userId = crypto.randomUUID(),
-      salt = randomBytes(16);
+    const userId = crypto.randomUUID();
+    const salt = randomBytes(16);
     const oldKeys = await deriveKeys('senha mestra antiga e longa', salt);
     const repeated = await deriveKeys('senha mestra antiga e longa', salt);
     expect(repeated.authKey).toEqual(oldKeys.authKey);
@@ -44,8 +44,8 @@ describe('contrato criptográfico', () => {
     expect(newKeys.authKey).not.toEqual(oldKeys.authKey);
     const changed = await rewrapVaultKey(wrapped, iv, oldKeys.kek, newKeys.kek, userId);
     const key = await unwrapVaultKey(changed.wrapped, changed.iv, newKeys.kek, userId);
-    const itemId = crypto.randomUUID(),
-      plain = { title: 'Email', url: '', username: '', password: 'abc', notes: '' };
+    const itemId = crypto.randomUUID();
+    const plain = { title: 'Email', url: '', username: '', password: 'abc', notes: '' };
     const blob = await encryptItem(plain, key, userId, itemId);
     expect(await decryptItem(blob, key, userId, itemId)).toEqual(plain);
     await expect(

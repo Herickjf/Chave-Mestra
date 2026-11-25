@@ -1,30 +1,13 @@
-import type { ReactNode } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { SessionProvider, useSession } from './state/SessionContext';
-import { useAutoLock } from './state/useAutoLock';
-import { AppShell } from './components/AppShell';
-import { Login, LockScreen, Register } from './pages/Auth';
-import { Vault } from './pages/Vault';
+import { SessionProvider } from './state/SessionProvider';
+import { Guard, PublicOnly } from './routing/RouteGuards';
+import { Login } from './pages/auth/Login';
+import { Register } from './pages/auth/Register';
+import { Vault } from './pages/vault/Vault';
 import { Generator } from './pages/Generator';
-import { Settings } from './pages/Settings';
-import './styles.css';
+import { Settings } from './pages/settings/Settings';
+import './styles/index.css';
 
-function Guard({ children }: { children: ReactNode }) {
-  const { session } = useSession();
-  useAutoLock();
-  if (session.status === 'loading') return <div className="loading-screen">Abrindo VaultZero…</div>;
-  if (session.status === 'anonymous') return <Navigate to="/login" replace />;
-  if (session.status === 'locked') return <LockScreen />;
-  return <AppShell>{children}</AppShell>;
-}
-function PublicOnly({ children }: { children: ReactNode }) {
-  const { session } = useSession();
-  if (session.status === 'loading') return <div className="loading-screen">Abrindo VaultZero…</div>;
-  if (session.status === 'unlocked' || session.status === 'guest')
-    return <Navigate to="/vault" replace />;
-  if (session.status === 'locked') return <LockScreen />;
-  return <>{children}</>;
-}
 export default function App() {
   return (
     <BrowserRouter>

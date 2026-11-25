@@ -1,0 +1,59 @@
+.settings-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.8fr;
+  gap: 25px;
+  align-items: start;
+}
+.guest-settings {
+  grid-template-columns: minmax(0, 650px);
+}
+.guest-end-button {
+  margin-top: 20px;
+}
+.settings-panel {
+  padding: 30px;
+}
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+.section-heading h2 {
+  margin: 0 0 4px;
+}
+.section-heading p {
+  font-size: 12px;
+  margin: 0;
+}
+.settings-panel .form-stack {
+  max-width: 500px;
+}
+.settings-side {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.segment {
+  display: flex;
+  gap: 7px;
+  margin-bottom: 23px;
+  padding: 5px;
+  background: #f0f1f1;
+  border-radius: 14px;
+}
+.segment button {
+  border: 0;
+  flex: 1;
+  padding: 10px;
+  background: transparent;
+  border-radius: 10px;
+  color: #7a8490;
+  font-size: 12px;
+  font-weight: 700;
+}
+.segment button.active {
+  background: #fff;
+  color: #0a62db;
+  box-shadow: 2px 3px 7px #cfcfcf;
+}

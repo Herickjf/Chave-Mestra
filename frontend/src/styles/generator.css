@@ -1,0 +1,112 @@
+.generator-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 26px;
+  align-items: start;
+}
+.generator-result {
+  padding: 40px;
+  min-height: 390px;
+}
+.generator-result .round-icon {
+  margin-bottom: 35px;
+}
+.generated-password {
+  font-family: Manrope, sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.035em;
+  font-size: clamp(21px, 2vw, 30px);
+  overflow-wrap: anywhere;
+  background: #f3f7fc;
+  border-radius: 16px;
+  padding: 21px;
+  margin: 16px 0 20px;
+  color: #25364e;
+}
+.generator-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.entropy {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #658aa9;
+  font-size: 12px;
+  margin-top: 25px;
+}
+.generator-result .alert {
+  margin-top: 20px;
+}
+.generator-options h2 {
+  margin: 0 0 5px;
+}
+.generator-options > .muted {
+  font-size: 12px;
+}
+.range-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  margin: 27px 0;
+}
+.range-label strong {
+  float: right;
+  color: #1269dd;
+}
+.range-label input {
+  display: block;
+  width: 100%;
+  accent-color: #0c6ce9;
+  margin-top: 20px;
+}
+.option-list {
+  margin-bottom: 28px;
+}
+.option-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  border-top: 1px solid #eeece9;
+}
+.option-row strong,
+.option-row small {
+  display: block;
+}
+.option-row strong {
+  font-size: 13px;
+}
+.option-row small {
+  font-size: 11px;
+  color: #9ca4ae;
+  margin-top: 3px;
+}
+.option-row input {
+  appearance: none;
+  width: 37px;
+  height: 22px;
+  border-radius: 20px;
+  background: #d4d6d7;
+  position: relative;
+  transition: background 0.2s;
+}
+.option-row input:before {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  left: 3px;
+  top: 3px;
+  background: white;
+  box-shadow: 0 1px 3px #aaa;
+  transition: transform 0.2s;
+}
+.option-row input:checked {
+  background: #106be4;
+}
+.option-row input:checked:before {
+  transform: translateX(15px);
+}

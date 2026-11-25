@@ -21,36 +21,27 @@ Sem bibliotecas criptográficas de terceiros no beta: a Web Crypto API cobre tud
 
 ## 3. Estrutura de pastas
 
-```
+```text
 frontend/
+├── README.md                 # Mapa de navegação e comandos
 ├── src/
-│   ├── crypto/
-│   │   ├── kdf.ts            # PBKDF2 + HKDF
-│   │   ├── vault.ts          # gerar/embrulhar/desembrulhar vaultKey
-│   │   ├── items.ts          # cifrar/decifrar itens
-│   │   ├── encoding.ts       # base64url, utf8
-│   │   ├── generator.ts      # gerador de senhas
-│   │   └── __tests__/
-│   ├── api/
-│   │   └── client.ts         # fetch com credentials, tratamento de erros
-│   ├── state/
-│   │   ├── SessionContext.tsx  # usuário, vaultKey (em memória), estado de bloqueio
-│   │   └── useAutoLock.ts
+│   ├── crypto/               # PBKDF2, HKDF, AES-GCM, encoding e gerador
+│   ├── api/client.ts         # Transporte HTTP e tipos do contrato
+│   ├── services/auth.ts      # Fluxos de autenticação com API e criptografia
+│   ├── state/                # Provider, contexto, tipos e bloqueio automático
+│   ├── routing/              # Guardas das rotas públicas e protegidas
+│   ├── layouts/              # AuthShell e AppShell
 │   ├── pages/
-│   │   ├── Register.tsx
-│   │   ├── Login.tsx
-│   │   ├── Vault.tsx
-│   │   ├── Generator.tsx
-│   │   └── Settings.tsx
-│   ├── components/
-│   │   ├── ItemList.tsx
-│   │   ├── ItemForm.tsx
-│   │   ├── ItemDetail.tsx
-│   │   ├── PasswordField.tsx
-│   │   ├── StrengthMeter.tsx
-│   │   ├── LockScreen.tsx
-│   │   └── TamperAlert.tsx
+│   │   ├── auth/             # Login, Register, LockScreen e GuestEntry
+│   │   ├── vault/            # Página, hook de dados, lista, detalhe e formulário
+│   │   ├── settings/         # Ajustes da conta, senha mestra e modo visitante
+│   │   └── Generator.tsx
+│   ├── components/           # Alert, Brand, PasswordInput e StrengthMeter
+│   ├── styles/               # CSS por área; index.css preserva a cascata
+│   ├── utils/                # Clipboard, erros, força de senha e URLs
+│   ├── App.tsx               # Tabela de rotas
 │   └── main.tsx
+└── infra/nginx.conf          # Servidor estático, CSP e proxy da API
 ```
 
 ## 4. Módulo de criptografia (interfaces)

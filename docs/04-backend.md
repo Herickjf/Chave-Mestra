@@ -23,28 +23,25 @@ O backend **autentica, autoriza e armazena**. Nunca interpreta o conteúdo do co
 
 ## 3. Estrutura de pastas
 
-```
+```text
 backend/
-├── src/
-│   ├── app.ts
-│   ├── server.ts
-│   ├── config.ts             # lê variáveis de ambiente, falha se faltar algo
-│   ├── db/
-│   │   ├── pool.ts
-│   │   └── migrations/
-│   ├── middleware/
-│   │   ├── auth.ts           # valida sessão, popula req.user
-│   │   ├── rateLimit.ts
-│   │   ├── validate.ts       # zod
-│   │   └── errors.ts
-│   ├── routes/
-│   │   ├── auth.routes.ts
-│   │   └── vault.routes.ts
-│   ├── services/
-│   │   ├── auth.service.ts
-│   │   ├── session.service.ts
-│   │   └── vault.service.ts
-│   └── __tests__/
+├── README.md                 # Mapa de navegação e comandos
+├── scripts/copy-migrations.mjs
+└── src/
+    ├── app.ts                # Composição do Express
+    ├── server.ts             # Inicialização, migrações e encerramento
+    ├── config.ts             # Validação do ambiente
+    ├── db/
+    │   ├── pool.ts
+    │   ├── migrate.ts
+    │   └── migrations/
+    ├── middleware/           # Sessão, CSRF, rate limiting e erros
+    ├── validation/           # Schemas Zod e tipos de entrada
+    ├── routes/               # Contratos HTTP: auth, vault e health
+    ├── services/             # Regras e SQL: auth, session e vault
+    ├── types/database.ts     # Tipos das linhas do PostgreSQL
+    ├── utils/                # Base64url, HttpError e handlers async
+    └── __tests__/app.test.ts
 ```
 
 ## 4. Modelo de dados

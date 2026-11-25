@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { ChevronRight, Copy, ShieldCheck, Shuffle } from 'lucide-react';
 import { defaultGenerator, generatePassword, type GeneratorOptions } from '../crypto/generator';
-import { Alert, errorText } from '../components/Common';
+import { Alert } from '../components/Alert';
+import { errorText } from '../utils/errors';
 import { copySecret } from '../utils/clipboard';
 
 export function Generator() {
-  const [options, setOptions] = useState<GeneratorOptions>(defaultGenerator),
-    [result, setResult] = useState(() => generatePassword(defaultGenerator)),
-    [message, setMessage] = useState('');
+  const [options, setOptions] = useState<GeneratorOptions>(defaultGenerator);
+  const [result, setResult] = useState(() => generatePassword(defaultGenerator));
+  const [message, setMessage] = useState('');
   const update = (key: keyof GeneratorOptions, value: boolean | number) =>
     setOptions((o) => ({ ...o, [key]: value }));
   const regenerate = () => {

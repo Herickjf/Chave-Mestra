@@ -1,0 +1,6 @@
+node_modules/
+dist/
+coverage/
+package-lock.json
+# SQL segue a convenção de quatro espaços documentada em database/README.md.
+src/db/migrations/

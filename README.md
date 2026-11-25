@@ -45,13 +45,14 @@ Sem host e secrets de produção, CI e publicação de imagens funcionam; o job 
 
 ## Estrutura
 
-- `backend/src/app.ts`: rotas, validação, sessão, autorização e rate limiting.
-- `backend/src/db/`: conexão e migração SQL.
+- [Backend: mapa do código](backend/README.md): `app.ts` compõe a API; rotas, serviços, validação e middlewares ficam em diretórios próprios.
+- `backend/src/db/`: conexão, executor de migrações e SQL versionado.
 - `frontend/src/crypto/`: contrato criptográfico e gerador.
 - `frontend/src/state/`: chave em memória e bloqueio automático.
 - `frontend/src/api/`: cliente HTTP tipado.
-- `frontend/src/components/`, `pages/` e `styles.css`: componentes, telas e estilo.
-- `infra/`: Caddy para TLS local e público; `frontend/infra/`: Nginx com CSP e proxy.
+- [Frontend: mapa do código](frontend/README.md): componentes compartilhados, layouts, páginas por área, serviços e CSS em `src/styles/`.
+- [Banco: inicialização e migrações](database/README.md): ordem dos scripts e responsabilidades de cada caminho de criação do esquema.
+- [Infraestrutura: mapa de execução](infra/README.md): Caddy, Nginx, Dockerfiles, deploy e pendências de configuração.
 
 ## Operação manual
 

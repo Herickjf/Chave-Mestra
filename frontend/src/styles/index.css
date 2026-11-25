@@ -1,0 +1,9 @@
+/* A ordem mantém a cascata original; regras responsivas são aplicadas por último. */
+@import './base.css';
+@import './components.css';
+@import './auth.css';
+@import './layout.css';
+@import './vault.css';
+@import './generator.css';
+@import './settings.css';
+@import './responsive.css';

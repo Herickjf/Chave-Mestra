@@ -9,7 +9,7 @@ const schema = z.object({
   ARGON2_MEMORY_KIB: z.coerce.number().int().min(19456).default(19456),
   ARGON2_TIME_COST: z.coerce.number().int().min(2).default(2),
   SESSION_IDLE_MIN: z.coerce.number().int().min(1).default(30),
-  SESSION_ABSOLUTE_HOURS: z.coerce.number().int().min(1).default(8)
+  SESSION_ABSOLUTE_HOURS: z.coerce.number().int().min(1).default(8),
 });
 
 export function loadConfig(env: NodeJS.ProcessEnv = process.env) {

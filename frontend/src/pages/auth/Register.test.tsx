@@ -2,8 +2,8 @@
 import { afterEach, expect, it, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { SessionProvider } from '../state/SessionContext';
-import { Register } from './Auth';
+import { SessionProvider } from '../../state/SessionProvider';
+import { Register } from './Register';
 
 afterEach(() => {
   cleanup();

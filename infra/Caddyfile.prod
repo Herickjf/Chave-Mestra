@@ -1,4 +1,6 @@
+# DOMAIN deve ser fornecido pelo ambiente do container Caddy.
 {$DOMAIN} {
     header Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
     reverse_proxy web:80
 }

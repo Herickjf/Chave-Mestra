@@ -1,5 +1,8 @@
+# HTTPS local. O Compose publica a porta 443 do gateway em localhost:8443.
 https://localhost {
     tls internal
+
     header Strict-Transport-Security "max-age=31536000"
+
     reverse_proxy web:80
 }
